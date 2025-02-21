@@ -30,6 +30,7 @@ class RecursiveAIExperiment:
         critique_model_name: str = "deepseek-r1:1.5b",
         iteration_limit: int = 3,
     ):
+        self.prev_score = 0
         self.client = OpenAI(
             base_url="http://localhost:11434/v1",
             api_key="ollama",  # required, but unused

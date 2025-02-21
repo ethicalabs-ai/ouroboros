@@ -1,5 +1,5 @@
 openai
-sentence_transformers
+sentence-transformers
 outlines
 pydantic
 datasets

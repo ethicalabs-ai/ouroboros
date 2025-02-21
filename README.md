@@ -91,14 +91,38 @@ During testing, unexpected phenomena were observed:
 
 ## Next Steps
 
+- Add concrete technical questions (20-30% of total)
 - Continue optimizing response refinement and ranking strategies.
 - Explore alternative architectures for integrating **self-questioning and self-improvement loops**.
 - Refactor the codebase and add CLI arguments to improve usability and flexibility in different LLM pipelines.
 - Add a Docker container and docker-compose setup for testing deployment with Ollama.
+- Consider splitting into train/validation subsets
 
 ## Requirements
 
 This project currently relies on Ollama but can be adapted to work with any OpenAI-compatible API. Additional dependencies will be documented in the repository.
+
+## Quick Start
+
+1. Install Ollama & pull models:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull deepseek-r1:1.5b
+```
+
+2. Set up environment:
+
+```bash
+pip install -r requirements.txt
+```
+
+
+3. Run experiment:
+
+```bash
+python main.py
+```
 
 ## Contributing
 
