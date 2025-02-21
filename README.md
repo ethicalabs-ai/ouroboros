@@ -30,9 +30,15 @@ The ultimate goal is to establish an AI framework that mirrors the recursive nat
 
 This research challenges conventional approaches to AGI by demonstrating that intelligence can evolve in self-contained cycles of learning and refinement, exploring the way for a new paradigm of self-sustaining, recursive AI.
 
-## Dataset Structure
+## 📂 Ouroboros Dataset
 
-The dataset is designed to support both **Supervised Fine-Tuning (SFT)** and **Generalized Preference Optimization (GRPO)**.
+The **Ouroboros Dataset** is now available on Hugging Face.
+
+🔗 **[Access the Dataset Here](https://huggingface.co/datasets/ethicalabs/ouroboros)**  
+
+### About the Dataset  
+
+This dataset documents the **recursive refinement process** used in this project, structured for both **Supervised Fine-Tuning (SFT)** and **Generalized Preference Optimization (GRPO)**.
 
 Each sample consists of structured reasoning steps extracted from AI-generated interactions. The dataset includes:
 
@@ -85,7 +91,6 @@ During testing, unexpected phenomena were observed:
 
 ## Next Steps
 
-- Release the dataset on **Hugging Face Datasets**.
 - Continue optimizing response refinement and ranking strategies.
 - Explore alternative architectures for integrating **self-questioning and self-improvement loops**.
 - Refactor the codebase and add CLI arguments to improve usability and flexibility in different LLM pipelines.
