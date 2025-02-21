@@ -2,6 +2,20 @@
 
 ![ouroboros](assets/ouroboros.jpg)
 
+## Disclaimer
+
+🚧 **This project is in an early experimental stage.** 🚧
+
+The current implementation is still **premature and under development**, with ongoing refinements in code structure, optimization, and performance. While the recursive refinement process demonstrates promising emergent behaviors, further improvements are necessary for broader usability.
+
+Key points to consider:
+- The codebase requires **optimization** for efficiency and scalability.
+- Documentation and examples on how to run the system on **novel prompts** will be provided soon.
+- Some experimental features may change or be reworked in future iterations.
+
+This project is a **work in progress**, and contributions, feedback, and discussions are encouraged. If you're interested in exploring recursive AI refinement, feel free to experiment—but keep in mind that the system is not yet production-ready.
+
+
 ## Introduction
 
 The evolution of artificial intelligence has largely been driven by increased computational scaling and large-scale data training. However, a more fundamental question arises: Can AI achieve self-improvement and deeper understanding through recursive self-questioning?
