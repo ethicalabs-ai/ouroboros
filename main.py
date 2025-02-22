@@ -30,7 +30,7 @@ class RecursiveAIExperiment:
     def __init__(
         self,
         model_name: str = "deepseek-r1:1.5b",
-        critique_model_name: str = "deepseek-r1:1.5b",
+        critique_model_name: str = "qwen2.5:0.5b",
         iteration_limit: int = 3,
     ):
         self.prev_score = 0
@@ -316,14 +316,14 @@ def main(prompt_dir, output_dir, model_name, critique_model_name, num_iterations
         )
 
         # Save dataset
-        dataset_path_arrow = output_path / f"ouroboros_{domain}_dataset.arrow"
+        dataset_path_parquet = output_path / f"ouroboros_{domain}_dataset.parquet"
         dataset_path_json = output_path / f"ouroboros_{domain}_dataset.json"
 
-        dataset.save_to_disk(str(dataset_path_arrow))  # Save as Arrow format
+        dataset.to_parquet(str(dataset_path_parquet))  # Save as Parquet format
         dataset.to_json(str(dataset_path_json))  # Also save as JSON
 
         logging.info(
-            f"Dataset successfully saved: {dataset_path_arrow}, {dataset_path_json}"
+            f"Dataset successfully saved: {dataset_path_parquet}, {dataset_path_json}"
         )
 
 
