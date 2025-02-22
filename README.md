@@ -1,4 +1,4 @@
-# Ouroboros: Self-Improving Through Iterative Refinement
+# Ouroboros: Self-Improving LLMs Through Iterative Refinement
 
 ![ouroboros](assets/ouroboros.jpg)
 
@@ -42,8 +42,8 @@ This dataset documents the **recursive refinement process** used in this project
 
 Each sample consists of structured reasoning steps extracted from AI-generated interactions. The dataset includes:
 
-- **input**: The original prompt or question posed to the AI.
-- **reasoning**: A structured breakdown of the AI's reasoning process, capturing emergent thought patterns. This may include multiple reasoning steps when applicable.
+- **input**: The original prompt or question posed to the LLM.
+- **reasoning**: A structured breakdown of the LLM's reasoning process, capturing emergent thought patterns. This may include multiple reasoning steps when applicable.
 - **completion**: The final AI-generated response after refinement.
 - **refinements**: A sequence of improvements, tracking the iterative enhancement of responses over multiple feedback cycles.
 
@@ -85,7 +85,7 @@ During testing, unexpected phenomena were observed:
 
 ## Open Questions & Future Directions
 
-- How can recursive AI frameworks be expanded beyond text-based reasoning into multimodal domains?
+- How can recursive LLM frameworks be expanded beyond text-based reasoning into multimodal domains?
 - Can iterative refinement processes lead to **self-sustaining** general intelligence with minimal human intervention?
 - What role do paradoxes and self-referential loops play in the emergence of higher-order cognition?
 
@@ -126,4 +126,4 @@ python main.py
 
 ## Contributing
 
-This project is open-source and welcomes contributions from those interested in recursive intelligence, AI refinement loops, and sustainable intelligence paradigms.
+This project is open-source and welcomes contributions from those interested in recursive intelligence, LLM refinement loops, and sustainable AI/ML paradigms.
