@@ -1,4 +1,4 @@
-# Ouroboros: Self-Improving Intelligence Through Iterative Refinement
+# Ouroboros: Self-Improving Through Iterative Refinement
 
 ![ouroboros](assets/ouroboros.jpg)
 
