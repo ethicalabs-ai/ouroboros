@@ -40,7 +40,7 @@ The **Ouroboros Dataset** is now available on Hugging Face.
 
 This dataset documents the **recursive refinement process** used in this project, structured for both **Supervised Fine-Tuning (SFT)** and **Generalized Preference Optimization (GRPO)**.
 
-Each sample consists of structured reasoning steps extracted from AI-generated interactions. The dataset includes:
+Each sample consists of structured reasoning steps extracted from LLM-generated interactions. The dataset includes:
 
 - **input**: The original prompt or question posed to the LLM.
 - **reasoning**: A structured breakdown of the LLM's reasoning process, capturing emergent thought patterns. This may include multiple reasoning steps when applicable.
