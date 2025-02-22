@@ -1,0 +1,5 @@
+Write a Python function to check if a number is prime. Then, analyze the function for potential inefficiencies or edge cases and refine it.
+Implement a function to sort a list of numbers. First, use the simplest possible sorting algorithm. Then, refine it by implementing a more efficient approach.
+Write a function that finds the factorial of a number using recursion. Then, refine the function to handle large numbers efficiently.
+Write a function that takes a list of strings and returns a dictionary mapping each unique word to its frequency. Then, refine your function by adding error handling and test cases.
+Write a Python script to read a CSV file and calculate the average value of a column. Then, refine your implementation to improve readability, modularity, and efficiency.

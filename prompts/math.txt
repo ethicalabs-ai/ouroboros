@@ -1,0 +1,5 @@
+Provide a step-by-step proof that the sum of the first n odd numbers is n². Then, critique your proof and refine it for clarity and rigor.
+Find the derivative of f(x) = x^x. Then, analyze potential calculation mistakes and refine the approach.
+Consider the Fibonacci sequence. Derive a formula for the sum of the first n Fibonacci numbers. Then, generalize this reasoning to a different recurrence relation of your choice.
+Prove that there are infinitely many prime numbers. Then, refine the explanation to make it more accessible to someone unfamiliar with number theory.
+Compute the limit: lim (x → 0) (sin x - x) / x³. After your first attempt, identify possible missteps and refine your approach.

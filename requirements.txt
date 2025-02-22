@@ -3,3 +3,4 @@ sentence-transformers
 outlines
 pydantic
 datasets
+click

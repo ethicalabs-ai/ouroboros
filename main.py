@@ -1,12 +1,15 @@
 import logging
+from pathlib import Path
 from typing import Dict, List
 
+import click
 import numpy as np
-from datasets import Dataset
 from openai import OpenAI
 from outlines import generate, models
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
+
+from datasets import Dataset
 
 
 class EvaluationMetrics(BaseModel):
@@ -26,7 +29,7 @@ logging.basicConfig(
 class RecursiveAIExperiment:
     def __init__(
         self,
-        model: str = "deepseek-r1:1.5b",
+        model_name: str = "deepseek-r1:1.5b",
         critique_model_name: str = "deepseek-r1:1.5b",
         iteration_limit: int = 3,
     ):
@@ -36,7 +39,7 @@ class RecursiveAIExperiment:
             api_key="ollama",  # required, but unused
         )
         self.iteration_limit = iteration_limit
-        self.model = model
+        self.model_name = model_name
         self.embed_model = SentenceTransformer(
             "all-MiniLM-L6-v2"
         )  # Local embedding model
@@ -50,13 +53,13 @@ class RecursiveAIExperiment:
     def generate_responses(self, prompt: str) -> List[str]:
         """Generate multiple candidate responses by making separate API requests."""
         logging.info(
-            f"Generating {self.iteration_limit} responses with {self.model} for prompt: {prompt}"
+            f"Generating {self.iteration_limit} responses with {self.model_name} for prompt: {prompt}"
         )
 
         responses = []
         for i in range(self.iteration_limit):
             response = self.client.chat.completions.create(
-                model=self.model,
+                model=self.model_name,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
             )
@@ -126,7 +129,7 @@ class RecursiveAIExperiment:
         refinement_prompt = f"Improve this response to '{query}':\n\nOriginal response: {response}\n\nMake it more logical, concise, and well-structured. Revised response:"
         refined_response = (
             self.client.chat.completions.create(
-                model=self.model,
+                model=self.model_name,
                 messages=[{"role": "user", "content": refinement_prompt}],
                 temperature=0.3,
             )
@@ -217,9 +220,18 @@ def extract_reasoning(response: str) -> List[str]:
     return reasoning_steps
 
 
-def run_experiment_on_prompts(prompts_file: str, iteration_limit: int = 5) -> Dataset:
+def run_experiment_on_prompts(
+    prompts_file: str,
+    model_name: str,
+    critique_model_name: str,
+    iteration_limit: int = 5,
+) -> Dataset:
     """Run RecursiveAIExperiment on all prompts and create a Hugging Face dataset."""
-    ai_experiment = RecursiveAIExperiment(iteration_limit=iteration_limit)
+    ai_experiment = RecursiveAIExperiment(
+        model_name=model_name,
+        critique_model_name=critique_model_name,
+        iteration_limit=iteration_limit,
+    )
 
     # Load prompts from file
     with open(prompts_file, "r", encoding="utf-8") as f:
@@ -251,11 +263,69 @@ def run_experiment_on_prompts(prompts_file: str, iteration_limit: int = 5) -> Da
     return dataset
 
 
+@click.command()
+@click.option(
+    "--prompt_dir",
+    type=click.Path(exists=True, file_okay=False),
+    required=True,
+    help="Directory containing prompt files, categorized by domain.",
+)
+@click.option(
+    "--output_dir",
+    type=click.Path(file_okay=False),
+    required=True,
+    help="Directory to save generated datasets.",
+)
+@click.option(
+    "--model_name",
+    type=str,
+    default="deepseek-r1:1.5b",
+    help="Name of the model used for response generation.",
+)
+@click.option(
+    "--critique_model_name",
+    type=str,
+    default="qwen2.5:0.5b",
+    help="Model used for critique refinement.",
+)
+@click.option(
+    "--num_iterations",
+    type=int,
+    default=5,
+    help="Number of recursive refinement iterations.",
+)
+def main(prompt_dir, output_dir, model_name, critique_model_name, num_iterations):
+    logging.basicConfig(level=logging.INFO)
+
+    prompt_path = Path(prompt_dir)
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    domains = [
+        f.stem for f in prompt_path.glob("*.txt")
+    ]  # Extract domain names from filenames
+
+    for domain in domains:
+        logging.info(f"Processing domain: {domain}")
+
+        dataset = run_experiment_on_prompts(
+            f"{prompt_path}/{domain}.txt",
+            iteration_limit=num_iterations,
+            model_name=model_name,
+            critique_model_name=critique_model_name,
+        )
+
+        # Save dataset
+        dataset_path_arrow = output_path / f"ouroboros_{domain}_dataset.arrow"
+        dataset_path_json = output_path / f"ouroboros_{domain}_dataset.json"
+
+        dataset.save_to_disk(str(dataset_path_arrow))  # Save as Arrow format
+        dataset.to_json(str(dataset_path_json))  # Also save as JSON
+
+        logging.info(
+            f"Dataset successfully saved: {dataset_path_arrow}, {dataset_path_json}"
+        )
+
+
 if __name__ == "__main__":
-    dataset = run_experiment_on_prompts("prompts.txt", iteration_limit=5)
-
-    # Save dataset
-    dataset.save_to_disk("ouroboros_dataset")  # Save as Arrow format
-    dataset.to_json("ouroboros_dataset.json")  # Also save as JSON
-
-    logging.info("Dataset successfully saved.")
+    main()

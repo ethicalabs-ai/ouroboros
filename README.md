@@ -121,7 +121,7 @@ pip install -r requirements.txt
 3. Run experiment:
 
 ```bash
-python main.py
+python3 main.py --prompt_dir=./prompts/ --output_dir=./datasets/
 ```
 
 ## Contributing

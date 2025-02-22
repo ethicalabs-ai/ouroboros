@@ -1,0 +1,5 @@
+A patient presents with persistent fatigue, weight loss, and night sweats. Provide a differential diagnosis. Then, refine your response by considering additional possible conditions based on more patient history and lab results.
+A 65-year-old male with hypertension and type 2 diabetes is prescribed a new antihypertensive medication. List potential first-line treatments. Then, refine your response by considering contraindications, drug interactions, and the latest clinical guidelines.
+A patient with advanced-stage cancer refuses further treatment despite having a potentially life-extending option. Explain the ethical considerations involved. Then, refine your response by discussing how a doctor should navigate this conversation.
+A patient’s complete blood count (CBC) shows an elevated white blood cell (WBC) count with a left shift. What are the possible causes? Then, refine your response by differentiating between infectious and non-infectious etiologies.
+During an outbreak of a novel respiratory virus, what public health measures should be implemented? Then, refine your response by considering effectiveness, feasibility, and ethical implications.
