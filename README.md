@@ -101,7 +101,32 @@ During testing, unexpected phenomena were observed:
 
 ## Requirements
 
-This project currently relies on Ollama but can be adapted to work with any OpenAI-compatible API. Additional dependencies will be documented in the repository.
+This project currently relies on Ollama but can be adapted to work with any OpenAI-compatible API.
+
+### **Experiment Setup**  
+
+#### **Hardware & Environment:**
+
+- **Machine:** MacBook Air M1, 8GB shared RAM  
+- **Backend:** PyTorch running on **MPS (Metal Performance Shaders)**  
+- **Inference Models:**  
+  - **DeepSeek-R1 (1.5B, GGUF)** via **Ollama**  
+  - **Qwen2.5 (0.5B, GGUF)** as critique model via **Ollama**  
+- **Embedding Model:**  
+  - **SentenceTransformer ("all-MiniLM-L6-v2")** for ranking responses  
+- **Processing Time:** The **initial dataset** was generated in ~8 hours on this setup.  
+
+### **Project Goal: Small-Scale, Locally Run Models**  
+- The aim is to **start small**, demonstrating that **LLMs can refine reasoning without requiring massive cloud resources**.  
+- Focus on **models that can run on-device** or in a **homelab setup** rather than relying solely on expensive AI infrastructure.  
+- This approach makes **iterative self-improvement accessible** without centralized control, reinforcing **sustainability & decentralization**.  
+
+### **Scalability & Future Experiments:**  
+- The **current experiment** is constrained by **limited resources**.  
+- **Scaling Pathways:** Cloud computing clusters (Kubernetes), serverless inference providers.
+- **Challenges:** Single-developer constraints **limit immediate upscaling** due to compute costs.  
+
+Despite resource limitations, the system demonstrates **scalability potential** with better infrastructure.
 
 ## Quick Start
 
@@ -110,6 +135,7 @@ This project currently relies on Ollama but can be adapted to work with any Open
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull deepseek-r1:1.5b
+ollama pull qwen2.5:0.5b
 ```
 
 2. Set up environment:
