@@ -62,7 +62,8 @@ Each sample consists of structured reasoning steps extracted from LLM-generated 
     "Entropy is about disorder.",
     "Intelligence helps manage disorder by processing information.",
     "Intelligence and self-reflection regulate entropy within complex systems."
-  ]
+  ],
+  "domain": "ouroboros"
 }
 ```
 
