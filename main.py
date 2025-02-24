@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Dict, List
 
@@ -191,7 +192,9 @@ class RecursiveAIExperiment:
         best_response = ranked[0] if ranked else candidates[0]
 
         # Step 4: Refine the best response
-        final_response = self.recursive_improvement(best_response, query)
+        final_response = clean_response(
+            self.recursive_improvement(best_response, query)
+        )
 
         logging.info(f"Experiment completed. Final response: {final_response}")
 
@@ -219,6 +222,19 @@ def extract_reasoning(response: str) -> List[str]:
         reasoning_steps = [step.strip() for step in reasoning_steps if step]
 
     return reasoning_steps
+
+
+def clean_response(response: str) -> str:
+    """
+    Removes reasoning enclosed within <think> </think> tags from the response.
+
+    Returns:
+        str: The cleaned response without the <think> sections.
+    """
+    cleaned_response = re.sub(
+        r"<think>.*?</think>", "", response, flags=re.DOTALL
+    ).strip()
+    return cleaned_response
 
 
 def load_prompt_records(prompts_file: str):
