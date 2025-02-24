@@ -1,3 +1,4 @@
+import json
 import logging
 from pathlib import Path
 from typing import Dict, List
@@ -220,27 +221,60 @@ def extract_reasoning(response: str) -> List[str]:
     return reasoning_steps
 
 
+def load_prompt_records(prompts_file: str):
+    """
+    Load prompt records from a file.
+
+    If prompts_file ends with '.json', it is assumed to be a JSONL file:
+      each line is a JSON object containing at least a "prompt" key.
+      e.g. {"prompt": "...", "some_other_field": "..."}
+
+    Otherwise, it is treated as a plain text file:
+      each non-empty line is treated as a prompt (string).
+    """
+    if prompts_file.endswith(".jsonl"):
+        # JSONL file
+        with open(prompts_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                record = json.loads(line)
+                # Ensure there's at least a 'prompt' key
+                if "prompt" not in record:
+                    raise ValueError("JSON lines must contain a 'prompt' field.")
+                yield record
+    else:
+        # Plain text: each line is a prompt
+        with open(prompts_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                yield {"prompt": line}
+
+
 def run_experiment_on_prompts(
     prompts_file: str,
     model_name: str,
     critique_model_name: str,
     iteration_limit: int = 5,
 ) -> Dataset:
-    """Run RecursiveAIExperiment on all prompts and create a Hugging Face dataset."""
+    """
+    Run RecursiveAIExperiment on all prompts (JSONL or plain text)
+    and create a Hugging Face Dataset.
+    """
     ai_experiment = RecursiveAIExperiment(
         model_name=model_name,
         critique_model_name=critique_model_name,
         iteration_limit=iteration_limit,
     )
 
-    # Load prompts from file
-    with open(prompts_file, "r", encoding="utf-8") as f:
-        prompts = [line.strip() for line in f if line.strip()]
-
     dataset_entries = []
 
-    for i, prompt in enumerate(prompts):
-        logging.info(f"Running experiment for prompt #{i + 1}: {prompt}")
+    for i, record in enumerate(load_prompt_records(prompts_file), start=1):
+        prompt = record["prompt"]
+        logging.info(f"Running experiment for prompt #{i}: {prompt}")
 
         # Run experiment
         result = ai_experiment.run_experiment(prompt)
@@ -255,6 +289,11 @@ def run_experiment_on_prompts(
             "completion": result["final_response"],
             "refinements": result["ranked_responses"],  # Store all refinements
         }
+
+        # Kkeep other keys from the record
+        for k, v in record.items():
+            if k not in ("prompt",):
+                dataset_entry[k] = v
 
         dataset_entries.append(dataset_entry)
 
@@ -301,26 +340,26 @@ def main(prompt_dir, output_dir, model_name, critique_model_name, num_iterations
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    domains = [
-        f.stem for f in prompt_path.glob("*.txt")
-    ]  # Extract domain names from filenames
+    # Iterate over all prompt files (jsonl, txt, etc.)
+    for file in prompt_path.glob("*.*"):
+        domain = file.stem  # e.g. "nlp-alpaca" for "nlp-alpaca.json"
 
-    for domain in domains:
         logging.info(f"Processing domain: {domain}")
 
+        # Run experiment on prompts (handles .jsonl or plain text)
         dataset = run_experiment_on_prompts(
-            f"{prompt_path}/{domain}.txt",
-            iteration_limit=num_iterations,
+            prompts_file=str(file),
             model_name=model_name,
             critique_model_name=critique_model_name,
+            iteration_limit=num_iterations,
         )
 
         # Save dataset
         dataset_path_parquet = output_path / f"ouroboros_{domain}_dataset.parquet"
         dataset_path_json = output_path / f"ouroboros_{domain}_dataset.json"
 
-        dataset.to_parquet(str(dataset_path_parquet))  # Save as Parquet format
-        dataset.to_json(str(dataset_path_json))  # Also save as JSON
+        dataset.to_parquet(str(dataset_path_parquet))
+        dataset.to_json(str(dataset_path_json))
 
         logging.info(
             f"Dataset successfully saved: {dataset_path_parquet}, {dataset_path_json}"
