@@ -1,0 +1,250 @@
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What would be the best type of exercise for a person who has arthritis?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the atomic mass for lithium."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Convert the following binary code to ASCII characters.\n01110101 01100001 01110010 01101001 01110100"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Take this sentence and make it more descriptive: She was scared.\nShe was scared."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Brainstorm 3 possible ideas to promote the following product\nNew motorized skateboard"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the sentence using imperative mood.\nPlease pick up the book from the shelf."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe a picnic vacation where four people are travelling together.\nFour people are travelling together to a picnic vacation."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain the concept of Big Data and what it means for companies and customers."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Analyze the given phrase in terms of its connotations.\nWild goose chase"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List three potential sources for the following research problem.\nWhat are the benefits of online learning?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Arrange the following countries in ascending order of GDP per capita.\nChina, US, India, Japan"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name the boat depicted in the provided photo.\nAttached photo"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit the grammar and punctuation of the given sentence.\nHumor is one of the most important ingredients of life"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the length of the hypotenuse in the following triangle.\n![alt text](https://www.onlinemathlearning.com/image-files/triangle-hypotenuse-length.png \"Right Triangle\")"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "How many instruments does a symphony orchestra typically have?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Summarize the phrase: \"GPT is a natural language processing architecture.\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Tell me the name of the capital of France. Output the name.\nnoinput"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Brainstorm five questions that you could ask a customer to better understand their needs."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Brainstorm different ways to cook a specific type of food.\nPork chops"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an example of a customer service conversation involving the keyword \"shipping\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is arithmetic mean and how to calculate it?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe a method for detecting spam emails."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Develop a computer program that adds two numbers."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "How can one reduce the number of distractions when studying?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Construct an algorithm to solve the given problem.\nProblem: Calculate the sum of all multiples of 3 and 5 between 1 and 100"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Pick out the proper noun from this sentence:\nThe government has implemented new regulations"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of interview questions for a software development role."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What are the components of a well-balanced meal?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Categorize the following movies into either comedy or drama.\nThe Usual Suspects, Amelie, Inception, Juno"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a story about a family who adopts a pet."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find out what year the company was founded.\nApple Inc. ̦̦̦̦̦̦̦̦̦̦̦̦̦̦̦̦"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Give the name and a brief description of a type of user interface."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Give an example of an appropriate reminder that could be set using a GPT model."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Invent a creative way to use virtual reality technology."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Identify any counterarguments to this statement.\nIt is important to eat a balanced diet."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find a creative way to promote a business."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the following sentence without using the word \"bad\": \"The food was bad.\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Define the following phrase.\nCatch-22"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Discard all characters that are not letters from the following string.\n\"It's time to 52x3 goodbye.\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a review for a car rental agency that frequently overcharged you."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the importance of nutrition in maintaining physical health?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain what kinds of benefits does AI have in the healthcare sector."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Assign an appropriate age rating to the following movie: \n\nMovie: Avengers: Endgame\nMovie: Avengers: Endgame"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What are the three most important skills that a computer programmer should have?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a tag line for a cafe."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "How can we inspire more people to become coding experts?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List three sites of historical importance in London."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Brainstorm three relevant topics for the article\nImpact of Covid-19 on Education"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a character sketch of the protagonist of the book."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Critique a piece of modern art.\nAndy Warhol, \"Campbell's Soup Can (Tomato)\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest three possible applications that could be built from GPT technology."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the best way to take care of a rose plant?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a prioritized list of activities to complete given the context.\nMaria is a student and she needs to balance school and her part-time job."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of five items that would make a perfect picnic lunch"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Come up with a word cloud based on the following theme: pollution."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Compare two types of media outlets: print and digital."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Determine the part of speech of the bolded word.\nShe climbed a tall tree."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit this sentence to have proper capitalization.\ntuesday is my favorite day of the week."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name three methods for authentication.\n<none>"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "State the conclusion based on the passage.\nThe Institute for Economic Footings has predicted that the global economy will start to recover in the second half of 2021."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Analyze the following text for subject-verb agreement mistakes.\nJohn and his friends has been to the amusement park"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Tell the name of a famous mathematician."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "From the passage below, identify what words have similar meaning.\n“My teacher gave me an advice to improve my writing skills.”"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What type of government does Spain currently have?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List three benefits of using social media."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a summary of the given article in no more than 5 sentences.\nClimate change is one of the most pressing and urgent issues of our time. The effects of global warming are already being felt around the world, with rising sea levels, extreme weather events, and other impacts. Reducing our use of fossil fuels is the most significant way to address climate change, and the good news is that it is possible to do this while still maintaining a modern lifestyle."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Come up with a creative idea for a children's book."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Categorize the following fruits according to color\nApple, Banana, Avocado, Peach"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Give an example of a data mining problem that consists of open-ended generation."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a link to an online store that sells books."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a dialogue between two people having a conversation about going to the beach."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name two positive qualities that a good waiter should possess"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Categorize the following characters into heroes and villains.\nHarry Potter, Voldemort, Hermione Granger"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name one type of training that companies can provide for their employees?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Arrange the items in alphabetical order.\numbrella, chair, pin"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the time in Oslo, Norway?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite this sentence to use strong language.\nJohn made a bad decision."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Give a rule of thumb for managing projects"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name two types of physical stimuli that animals can detect."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write the meaning of the phrase 'cost of living'."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of jobs that involve writing skills."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a marketing plan for reaching a young adult demographic"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Take the input sentence and make it more expressive by adding a metaphor.\nThe internet is a global network."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an HTML page that contains the text \"Welcome to my page\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Construct a metaphor that compares love to a plant."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Insert a semantically appropriate sentence at the beginning of the following text so that the topic is introduced smoothly.\nCells are classified by their shapes and sizes and by the relative complexity of their biochemical processes, as well as their genetic content."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Replace the <mask> in the following sentence with the most appropriate synonym.\nThe horse whinnied in <mask>."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the average value from the given numbers\n2, 4, 6, 9"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "How do you respond to a negative comment on social media?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find the synonyms of the following word: 'Tenacious'."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Deduce the meaning of the following word by using the context.\nHe walked jauntily."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest a way to add the following information in the given paragraph.\nThe Amazon rainforest is one of the world's most stunning regions.\nAdding info: \nIt covers nearly 5.5 million square kilometers in nine countries in South America."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit the given code to optimize its performance.\nfor i in range(N):\n    for j in range(N-1):\n        sum += A[i][j]"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Classify the given input sentence in 4 classes.\nI bought a new phone"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given the following sentence, add a transition word to make the sentence better.\nHe cooked breakfast early."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Come up with 5 new ideas for a product design."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Provide a context to this sentence: \"He suggested the theory\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the main differences between a voice assistant and a chatbot in two sentences."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit the following sentence to make it more formal:\n\"My phone got stolen so I need to buy a new one\"\nMy phone got stolen so I need to buy a new one"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest five ways to budget your expenses."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is a disadvantage of using a deep learning network to perform object detection?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a memorable metaphor"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Analyze the character of Daisy Buchanan, in The Great Gatsby"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain why English is a difficult language to learn."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What changes can be made to make the following phrase easier to understand?\nThe most auspicious occurrence happened from time to time."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of 5 items that I need to pack for a vacation."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a classification model to classify movie reviews as negative, neutral or positive."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Compress the following text using Lempel-Ziv-Welch (LZW) algorithm\n$ACADEMICPROGRAM$"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given the input, state the relationship between the two objects.\nPersonX - Scientist\nPersonY - Doctor"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of five positive attitudes."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given a numerical value, compute its square root.\nNumber: 64"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a sentence explaining how eating healthy benefits the human body?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain why it is important to reduce your carbon footprint."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find three ways to improve the team workflow."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the following sentence using succinct and formal language: ”The university provided its students with both necessary knowledge and life skills.”"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rate the customer service from 1 to 10\nI just called your customer service line and the representative was incredibly helpful and attentive."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a 3D rendering of a house using the provided dimensions.\nHeight: 40 feet\nWidth: 30 feet\nLength: 20 feet"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Relevance of classical studies for modern times"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find an example of a successful marketing plan"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a function that takes an array and returns a new array with only the even numbers from the original array.\n[1, 2, 3, 4, 5, 6, 7, 8]"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Make a list of at least three books\nnoinput"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Compose a tweet with a maximum of 280 characters.\n#DiversityMatters"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Design a logo for an imaginary peace organization."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the mean of these 5 numbers: 2, 4, 10, 11, 13."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Construct a detailed world using the following objects.\ncar, knife, mirror"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "From the given text, identify two examples of symbolic meaning.\nOnce upon a time, there was a gentle rain that washed away the dust from the land."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Analyze the advantages of working in a team."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the scoping rule of a variable?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write the code for multiplying two matrices\nmultiply two 3x3 matrices"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Give me two examples of a type of bird."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe what a typical workday might look like for a computer programmer."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a list of 5 questions to ask a candidate in a job interview."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe what would happen if the given situation took place.\nIf the Earth suddenly stopped rotating"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List 3 risks associated with investing in cryptocurrencies\nNo input"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Transform the following 3 sentences into one single sentence using the imperative form.\nThe snow is falling\nThe wind is blowing\nThe trees are shaking"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest two methods to improve computer security."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "For the following artist, write a memorable song title for them.\nLady Gaga"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an if-else statement with the following conditions: \nIf the temperature is greater than 25 degrees, print \"It is hot outside.\", else print \"It is a comfortable temperature.\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Make a plan for a complete workout routine."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Design a pop-up notification for a phone app.\nA quick reminder that there is an upcoming event at 8pm"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of 5 countries with the highest human development index."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest one use case for a robot assistant in a doctor's office."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find the most similar word to the provided word.\nbeautiful"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Assume the given sentence is written incorrectly: \"We invited guests to a party wearing formal clothes.\" Rewrite the sentence to sound grammatically correct."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Construct a SQL query which will output the names of all the people born before 1990."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create an analogy that compares a plant to a person growing up"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the sentence using a verb conjugation of your choice.\nMy dad loves going on hikes."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Identify the pros and cons of using AI in healthcare."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the given painting in 20 words or less.\n<a link to a painting>"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create two roles for a movie script."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Develop a code to create a dictionary with the length of each word in the given sentence.\nsentence = \"Welcome to the world of Python programming\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe how the rise of artificial intelligence can contribute to business."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Design a graphical user interface (GUI) to represent the following data.\nAir quality index of major cities around the world"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Categorize this piece of text as to whether it is a fiction or non-fiction\nThe sun shone brightly in the sky above the small town."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a comment for a given post\n\"I'm so excited for my graduation day!\""}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Divide 10 by 4 and remove the remainder."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the key responsibilities of a software engineer."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an effective headline for an article\nThe article is about the rise in rates of depression since the start of the coronavirus pandemic"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the verb tense used in the following sentence?\nI have been running."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What is the ideal temperature for a refrigerator?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Add a punctuation mark to the sentence to make it valid.\nThe project was finished on time"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an interesting fact about the behavior of a physical system."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Reorganize the given sentences and create a logical, cohesive story.\nAlice ordered her food. She started to eat. The food was delicious."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Identify the subject of the sentence.\nOutput should be a single word.\nRuth and Molly made cookies for the bake sale."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain what a \"food desert\" is and why they are a problem."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Transform the following sentence into one that shows contrast.\nThe apple is ripe"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the ratio of males to females in a student population.\n400 males and 300 females"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a new sentence that contains a simile."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the cost of purchasing six bottles of wine, if each bottle is priced at $4.99"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an appropriate response for the sentence: \"My phone battery died suddenly\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Outline the range of colors a television can display."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain the concept of indexing to a lay person."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List 3 types of environment effects of fossil fuel emissions."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a webpage that displays a contact us form."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an AI chatbot script for a customer service scenario"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the best practices for secure coding."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Formulate a hypothesis about the given data.\nData showing the average score of students in different classes."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What activities can be done to reduce our carbon footprint?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Read the given article and summarize it in 100 words.\nClimate change has caused extreme weather events to become more common and more intense. Rising temperatures are melting the polar ice caps, causing sea levels to rise and flooding coastal areas. Heat waves are becoming more common and last longer, while intense droughts can cause crop failures. Weather events, such as hurricanes and tornadoes, also become more powerful."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a sentence using the words “laudable”, “enthusiastic” and “endeavour”"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Below are the ingredients to make a burrito. Rearrange the ingredients you need in order to make it.\nlettuce, beans, cheese, rice"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest a possible solution to the given problem.\nThe company is not able to attract customers due to outdated website design."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a report summarizing the given paper.\nThe paper investigates the effects of climate change in the Arctic region."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Provide two example of everyday products that contain plastic."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the following list of objects as a sentence.\ncomputer, chair, desk"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest one action that an organic food store can take to reduce its environmental impact."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suppose you have to write a persuasive piece about getting rid of fossil fuels use. What 3 elements should you include in your argumentation?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit the following text to better reflect formal language.\nThe company learned they had to adjust their strategy cuz the market was changing."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given a financial statement, predict what the stock market's reaction will be.\nThe company reported a 25% growth in profits year-over-year."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Translate a given sentence into Spanish.\nI ate lunch at noon."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given a person's name, create a creative description of that person.\nJohn"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate three realistic locations for a treasure hunt."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What are the benefits of using a data visualization tool?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Re-arrange the words from the given phrase so that it forms a meaningful sentence.\nThe phrase is \"play video I can games\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a comment praising the given product.\nBlueberry Muffin"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate an example of an empirically tested hypothesis for a research study"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a list of 5 books which are suitable as gifts for your best friend.\nOccasion: Birthday"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name the software engineering design pattern and give the definition of it."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Tell me about Michelangelo."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a tweet about women's rights."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find five top-rated restaurants in New York City."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List three different ways to prevent the spread of coronavirus."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a statement that highlights your best qualities"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain why software engineers must use version control systems."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Design an AI assistant that could help a student in various academic tasks."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe a single application of Machine Learning in no more than 4 sentences."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe a responsible ecological lifestyle."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain the different steps in the research process."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Develop a recipe for a healthy snack using five ingredients."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain how a neural network learns."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the upcoming weather forecast for tomorrow in two sentences."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Identify the main thesis of a certain essay.\nThe essay is called 'The Need for Sustainability in the Fashion Industry'"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find the most recommended restaurant in the city\nLas Vegas"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a computer program to predict the probability of a coin tossing event."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Order the following steps in creating a successful presentation.\n- Outline topics\n- Add visuals\n- Practice\n- Prepare slides"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Design a website for an online store selling handmade jewelry."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Come up with a list of 5 basic items needed to camp."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a random five-digit integer."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Read the following sentence and create a sentence expressing the opposite.\nI plan to graduate college in 2024."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Find a sustainable way to reduce single-use plastics.\nExamples of single-use plastics, such as straws, bags and cups."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Provide a detailed explanation for the cause of an internet outage."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Assign the correct labels to the following fruits:\nApple, Pear, Grape"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Order the following list of ingredients from lowest to highest in calories\nAlmonds, black beans, cheddar cheese"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "What are the four main types of energy resources?"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Calculate the trade-off cost between two investments.\nInvestment 1 value: $100\nInvestment 2 value: $80"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Summarize the use case of a chatbot"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Change the format of the document to a Word document.\nThe document is currently in a PDF format."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name 5 advantages of cloud storage."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a haiku poem related to justice"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a sample password that follows the given criteria.\nMust contain 12 characters, including one uppercase letter and one number"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Provide three sentences to explain the definition of \"artificial intelligence\"."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Given a sentence, add an appropriate transition\nJohn failed the test. He was very upset."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Write a letter introducing yourself as a new hire to your company.\nI am Jane Smith, a newly hired Data Scientist at ABC Inc."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe a hypothetical creature of your choice."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a random story about a robot escaping a scientific lab."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Compose a 1-2 sentence slogan for a brand that specializes in outdoor lifestyle apparel."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Name three benefits of walking every day."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Rewrite the following general statement into an assertion statement.\nThe internet has had a huge impact on our lives."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a list of 5 questions about the stock market"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a speech to convince customers to buy a product."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Describe the basic steps in painting a room."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "List 5 tips for effective job hunting."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Edit the text in the input field to make the text more concise.\nThe rock band Metallica consists of four talented musicians. These musicians are James Hetfield, Lars Ulrich, Kirk Hammett, and Robert Trujillo."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Categorize the following items into one of the following categories: food, clothing, or furniture.\nChair, jeans, apple"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Create a tweet about the benefits of digital marketing"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Suggest some activities one can do while hiking."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain why climate change is a pressing environmental and human concern."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Generate a story about a princess who falls in love with a prince from a different kingdom."}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Explain the advantages and disadvantages of the given option.\nBuilding a web application using Drupal"}
+{"dataset_name": "tatsu-lab/alpaca", "prompt": "Which problems can be addressed by deep learning?"}
