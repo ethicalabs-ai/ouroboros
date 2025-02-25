@@ -231,7 +231,6 @@ def clean_response(response: str) -> str:
         str: The cleaned response without the <think> sections.
     """
     cleaned_response = re.sub(r"<think>.*?</think>", "", response, flags=re.DOTALL)
-    cleaned_response = re.sub(r"<think>", "", response)
     return cleaned_response.strip()
 
 
@@ -424,7 +423,11 @@ def main(
             force=force,
         )
         # If updated dataset is bigger => new data was added
-        if merged_dataset is None or len(updated_dataset) > len(merged_dataset):
+        if (
+            force
+            or merged_dataset is None
+            or len(updated_dataset) > len(merged_dataset)
+        ):
             changes_detected = True
             merged_dataset = updated_dataset  # Keep the newly updated dataset
         else:
