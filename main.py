@@ -193,9 +193,7 @@ class RecursiveAIExperiment:
         best_response = ranked[0] if ranked else candidates[0]
 
         # Step 4: Refine the best response
-        final_response = clean_response(
-            self.recursive_improvement(best_response, query)
-        )
+        final_response = self.recursive_improvement(best_response, query)
 
         logging.info(f"Experiment completed. Final response: {final_response}")
 
@@ -273,6 +271,7 @@ def load_prompt_records(prompts_file: str):
 
 def run_experiment_on_prompts(
     prompts_file: str,
+    domain: str,
     model_name: str,
     critique_model_name: str,
     iteration_limit: int,
@@ -307,8 +306,9 @@ def run_experiment_on_prompts(
         new_entry = {
             "input": prompt,
             "reasoning": reasoning_steps if reasoning_steps else None,
-            "completion": result["final_response"],
+            "completion": clean_response(result["final_response"]),
             "refinements": result["ranked_responses"],
+            "domain": domain,
         }
         # Keep other keys from the record if present
         for k, v in record.items():
@@ -417,6 +417,7 @@ def main(
         logging.info(f"Processing domain: {domain} from file: {file}")
         updated_dataset = run_experiment_on_prompts(
             prompts_file=str(file),
+            domain=domain,
             model_name=model_name,
             critique_model_name=critique_model_name,
             iteration_limit=num_iterations,
