@@ -230,10 +230,9 @@ def clean_response(response: str) -> str:
     Returns:
         str: The cleaned response without the <think> sections.
     """
-    cleaned_response = re.sub(
-        r"<think>.*?</think>", "", response, flags=re.DOTALL
-    ).strip()
-    return cleaned_response
+    cleaned_response = re.sub(r"<think>.*?</think>", "", response, flags=re.DOTALL)
+    cleaned_response = re.sub(r"<think>", "", response)
+    return cleaned_response.strip()
 
 
 def load_prompt_records(prompts_file: str):
@@ -280,25 +279,29 @@ def run_experiment_on_prompts(
 ) -> Dataset:
     """
     Runs the Ouroboros pipeline on prompts from `prompts_file`,
-    merges with existing_dataset if provided, and returns the combined dataset.
+    merges with existing_dataset if provided, and prevents duplicate records.
     """
     ai_experiment = RecursiveAIExperiment(
         model_name, critique_model_name, iteration_limit
     )
 
-    # Create a set of existing prompt strings for quick membership checks
-    existing_prompts = set()
+    # Create a dictionary mapping "input" -> full record for easy lookup
+    existing_records = {}
     if existing_dataset is not None and "input" in existing_dataset.column_names:
-        existing_prompts = set(existing_dataset["input"])
-
-    new_entries = []
+        existing_records = {row["input"]: row for row in existing_dataset}
 
     for i, record in enumerate(load_prompt_records(prompts_file), start=1):
         prompt = record["prompt"]
-        if (prompt in existing_prompts) and (not force):
-            logging.info(f"Skipping existing prompt: {prompt}")
-            continue
 
+        # Handle duplicates:
+        if prompt in existing_records:
+            if not force:
+                logging.info(f"Skipping existing prompt: {prompt}")
+                continue
+            else:
+                logging.info(f"Replacing existing prompt due to --force: {prompt}")
+
+        # Run experiment
         logging.info(f"Running experiment for prompt #{i}: {prompt}")
         result = ai_experiment.run_experiment(prompt)
         reasoning_steps = extract_reasoning(result["final_response"])
@@ -315,15 +318,11 @@ def run_experiment_on_prompts(
             if k != "prompt":
                 new_entry[k] = v
 
-        new_entries.append(new_entry)
+        # Update the existing record OR add new one
+        existing_records[prompt] = new_entry
 
-    # Merge new entries with existing data
-    if existing_dataset is not None:
-        merged_data = list(existing_dataset) + new_entries
-        updated_dataset = Dataset.from_list(merged_data)
-    else:
-        updated_dataset = Dataset.from_list(new_entries)
-
+    # Create updated dataset without duplicates
+    updated_dataset = Dataset.from_list(list(existing_records.values()))
     return updated_dataset
 
 
