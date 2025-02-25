@@ -6,6 +6,7 @@ from typing import Dict, List
 
 import click
 import numpy as np
+from huggingface_hub import HfFolder
 from openai import OpenAI
 from outlines import generate, models
 from pydantic import BaseModel
@@ -279,60 +280,51 @@ def run_experiment_on_prompts(
     force: bool = False,
 ) -> Dataset:
     """
-    Run RecursiveAIExperiment on all prompts and update an existing Hugging Face dataset.
+    Runs the Ouroboros pipeline on prompts from `prompts_file`,
+    merges with existing_dataset if provided, and returns the combined dataset.
     """
     ai_experiment = RecursiveAIExperiment(
-        model_name=model_name,
-        critique_model_name=critique_model_name,
-        iteration_limit=iteration_limit,
+        model_name, critique_model_name, iteration_limit
     )
 
-    dataset_entries = []
-
-    # Convert existing dataset to a dictionary for fast lookup
+    # Create a set of existing prompt strings for quick membership checks
     existing_prompts = set()
-    if existing_dataset:
+    if existing_dataset is not None and "input" in existing_dataset.column_names:
         existing_prompts = set(existing_dataset["input"])
+
+    new_entries = []
 
     for i, record in enumerate(load_prompt_records(prompts_file), start=1):
         prompt = record["prompt"]
-
-        # Skip processing if the prompt already exists and force is not set
-        if prompt in existing_prompts and not force:
+        if (prompt in existing_prompts) and (not force):
             logging.info(f"Skipping existing prompt: {prompt}")
             continue
 
         logging.info(f"Running experiment for prompt #{i}: {prompt}")
-
-        # Run experiment
         result = ai_experiment.run_experiment(prompt)
-
-        # Extract structured reasoning
         reasoning_steps = extract_reasoning(result["final_response"])
 
-        # Construct dataset entry
-        dataset_entry = {
+        new_entry = {
             "input": prompt,
             "reasoning": reasoning_steps if reasoning_steps else None,
             "completion": result["final_response"],
-            "refinements": result["ranked_responses"],  # Store all refinements
+            "refinements": result["ranked_responses"],
         }
-
-        # Keep other keys from the record
+        # Keep other keys from the record if present
         for k, v in record.items():
-            if k not in ("prompt",):
-                dataset_entry[k] = v
+            if k != "prompt":
+                new_entry[k] = v
 
-        dataset_entries.append(dataset_entry)
+        new_entries.append(new_entry)
 
-    # Merge new and existing datasets
-    if existing_dataset:
-        merged_data = list(existing_dataset) + dataset_entries
-        dataset = Dataset.from_list(merged_data)
+    # Merge new entries with existing data
+    if existing_dataset is not None:
+        merged_data = list(existing_dataset) + new_entries
+        updated_dataset = Dataset.from_list(merged_data)
     else:
-        dataset = Dataset.from_list(dataset_entries)
+        updated_dataset = Dataset.from_list(new_entries)
 
-    return dataset
+    return updated_dataset
 
 
 @click.command()
@@ -351,13 +343,13 @@ def run_experiment_on_prompts(
 @click.option(
     "--hf_dataset",
     type=str,
-    help="Hugging Face dataset repository to update, e.g., my_user/my_dataset.",
+    help="Hugging Face dataset repository to update, e.g., my_user/my_dataset",
 )
 @click.option(
     "--model_name",
     type=str,
     default="deepseek-r1:1.5b",
-    help="Name of the model used for response generation.",
+    help="Model used for response generation.",
 )
 @click.option(
     "--critique_model_name",
@@ -379,7 +371,13 @@ def run_experiment_on_prompts(
 @click.option(
     "--push_to_hf",
     is_flag=True,
-    help="Push the updated dataset back to Hugging Face.",
+    help="Push the updated dataset back to Hugging Face (only once at the end).",
+)
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    help="Automatically confirm overwriting files without prompting.",
 )
 def main(
     prompt_dir,
@@ -390,58 +388,82 @@ def main(
     num_iterations,
     force,
     push_to_hf,
+    yes,
 ):
     logging.basicConfig(level=logging.INFO)
     prompt_path = Path(prompt_dir)
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
+    # 1) Load existing dataset from HF (if specified)
     existing_dataset = None
     if hf_dataset:
         logging.info(f"Loading dataset from Hugging Face: {hf_dataset}")
         try:
-            dataset_dict = load_dataset(hf_dataset)
-            split_name = list(dataset_dict.keys())[0]
-            existing_dataset = dataset_dict[split_name]
+            ds_dict = load_dataset(hf_dataset)
+            first_split = list(ds_dict.keys())[0]  # e.g. "train"
+            existing_dataset = ds_dict[first_split]
+            logging.info(f"Loaded '{hf_dataset}' with {len(existing_dataset)} rows.")
         except Exception as e:
             logging.warning(f"Failed to load dataset: {e}")
+            existing_dataset = None
 
-    changes_detected = False  # Track if we made any changes
+    # 2) Iterate prompt files to accumulate updates in a single dataset
+    merged_dataset = existing_dataset
+    changes_detected = False
 
     for file in prompt_path.glob("*.*"):
         domain = file.stem
-        logging.info(f"Processing domain: {domain}")
-
+        logging.info(f"Processing domain: {domain} from file: {file}")
         updated_dataset = run_experiment_on_prompts(
-            str(file),
-            model_name,
-            critique_model_name,
-            num_iterations,
-            existing_dataset,
-            force,
+            prompts_file=str(file),
+            model_name=model_name,
+            critique_model_name=critique_model_name,
+            iteration_limit=num_iterations,
+            existing_dataset=merged_dataset,
+            force=force,
         )
+        # If updated dataset is bigger => new data was added
+        if merged_dataset is None or len(updated_dataset) > len(merged_dataset):
+            changes_detected = True
+            merged_dataset = updated_dataset  # Keep the newly updated dataset
+        else:
+            logging.info(f"No new prompts were added for domain: {domain}.")
 
-        if len(updated_dataset) == len(existing_dataset):  # No new data added
-            logging.info(f"No new prompts added for domain: {domain}. Skipping save.")
-            continue
+    # 3) If changes were detected, save locally
+    if changes_detected and merged_dataset is not None:
+        # Just pick a single name or store separate domain files if needed
+        dataset_path_parquet = output_path / "ouroboros_dataset.parquet"
+        dataset_path_json = output_path / "ouroboros_dataset.json"
 
-        changes_detected = True  # Changes detected
+        if dataset_path_parquet.exists():
+            if not yes and click.confirm(
+                f"{dataset_path_parquet} exists. Overwrite?", default=True
+            ):
+                logging.info("Skipping save due to user cancel.")
+                return
 
-        dataset_path = output_path / f"ouroboros_{domain}_dataset.parquet"
-        if dataset_path.exists() and not click.confirm(
-            f"{dataset_path} exists. Overwrite?", default=True  # add click option -y
-        ):
-            continue
+        merged_dataset.to_parquet(str(dataset_path_parquet))
+        merged_dataset.to_json(str(dataset_path_json))
+        logging.info(
+            f"Dataset saved locally to: {dataset_path_parquet} & {dataset_path_json}"
+        )
+    else:
+        logging.info("No changes detected. Skipping local save.")
 
-        updated_dataset.to_parquet(str(dataset_path))
-
-    # Push to Hugging Face only if changes were made
-    if push_to_hf and hf_dataset and changes_detected:
+    # 4) Push once to Hugging Face if requested
+    if push_to_hf and hf_dataset and changes_detected and merged_dataset is not None:
+        token = HfFolder.get_token()
+        if not token:
+            logging.error(
+                "Hugging Face authentication token not found. Run `huggingface-cli login` first."
+            )
+            return
         logging.info(f"Pushing updated dataset to Hugging Face: {hf_dataset}")
-        updated_dataset.push_to_hub(repo_id=hf_dataset, private=False)
+        merged_dataset.push_to_hub(repo_id=hf_dataset, private=False)
         logging.info("Dataset successfully pushed to Hugging Face.")
     elif push_to_hf:
-        logging.info("No new data added. Skipping Hugging Face push.")
+        logging.info("No new data. Skipping Hugging Face push.")
 
 
 if __name__ == "__main__":
