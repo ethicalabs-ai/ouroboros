@@ -11,7 +11,7 @@ from outlines import generate, models
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
-from datasets import Dataset
+from datasets import Dataset, load_dataset
 
 
 class EvaluationMetrics(BaseModel):
@@ -274,11 +274,12 @@ def run_experiment_on_prompts(
     prompts_file: str,
     model_name: str,
     critique_model_name: str,
-    iteration_limit: int = 5,
+    iteration_limit: int,
+    existing_dataset: Dataset = None,
+    force: bool = False,
 ) -> Dataset:
     """
-    Run RecursiveAIExperiment on all prompts (JSONL or plain text)
-    and create a Hugging Face Dataset.
+    Run RecursiveAIExperiment on all prompts and update an existing Hugging Face dataset.
     """
     ai_experiment = RecursiveAIExperiment(
         model_name=model_name,
@@ -288,8 +289,19 @@ def run_experiment_on_prompts(
 
     dataset_entries = []
 
+    # Convert existing dataset to a dictionary for fast lookup
+    existing_prompts = set()
+    if existing_dataset:
+        existing_prompts = set(existing_dataset["input"])
+
     for i, record in enumerate(load_prompt_records(prompts_file), start=1):
         prompt = record["prompt"]
+
+        # Skip processing if the prompt already exists and force is not set
+        if prompt in existing_prompts and not force:
+            logging.info(f"Skipping existing prompt: {prompt}")
+            continue
+
         logging.info(f"Running experiment for prompt #{i}: {prompt}")
 
         # Run experiment
@@ -306,15 +318,20 @@ def run_experiment_on_prompts(
             "refinements": result["ranked_responses"],  # Store all refinements
         }
 
-        # Kkeep other keys from the record
+        # Keep other keys from the record
         for k, v in record.items():
             if k not in ("prompt",):
                 dataset_entry[k] = v
 
         dataset_entries.append(dataset_entry)
 
-    # Create Hugging Face dataset
-    dataset = Dataset.from_list(dataset_entries)
+    # Merge new and existing datasets
+    if existing_dataset:
+        merged_data = list(existing_dataset) + dataset_entries
+        dataset = Dataset.from_list(merged_data)
+    else:
+        dataset = Dataset.from_list(dataset_entries)
+
     return dataset
 
 
@@ -330,6 +347,11 @@ def run_experiment_on_prompts(
     type=click.Path(file_okay=False),
     required=True,
     help="Directory to save generated datasets.",
+)
+@click.option(
+    "--hf_dataset",
+    type=str,
+    help="Hugging Face dataset repository to update, e.g., my_user/my_dataset.",
 )
 @click.option(
     "--model_name",
@@ -349,37 +371,77 @@ def run_experiment_on_prompts(
     default=5,
     help="Number of recursive refinement iterations.",
 )
-def main(prompt_dir, output_dir, model_name, critique_model_name, num_iterations):
+@click.option(
+    "--force",
+    is_flag=True,
+    help="Force reprocessing even if the prompt already exists in the dataset.",
+)
+@click.option(
+    "--push_to_hf",
+    is_flag=True,
+    help="Push the updated dataset back to Hugging Face.",
+)
+def main(
+    prompt_dir,
+    output_dir,
+    hf_dataset,
+    model_name,
+    critique_model_name,
+    num_iterations,
+    force,
+    push_to_hf,
+):
     logging.basicConfig(level=logging.INFO)
-
     prompt_path = Path(prompt_dir)
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # Iterate over all prompt files (jsonl, txt, etc.)
+    # Load existing dataset if HF dataset name is provided
+    existing_dataset = None
+    if hf_dataset:
+        logging.info(f"Downloading existing dataset from Hugging Face: {hf_dataset}")
+        try:
+            existing_dataset = load_dataset(hf_dataset)
+            split_name = list(existing_dataset.keys())[0]
+            existing_dataset = existing_dataset[split_name]
+            logging.info(
+                f"Using dataset split: {split_name} with {len(existing_dataset)} records."
+            )
+        except Exception as e:
+            logging.warning(f"Failed to load dataset from HF: {e}")
+            existing_dataset = None
+
     for file in prompt_path.glob("*.*"):
-        domain = file.stem  # e.g. "nlp-alpaca" for "nlp-alpaca.json"
+        domain = file.stem  # e.g., "nlp-alpaca" for "nlp-alpaca.json"
 
         logging.info(f"Processing domain: {domain}")
 
-        # Run experiment on prompts (handles .jsonl or plain text)
-        dataset = run_experiment_on_prompts(
+        # Run experiment on prompts and update dataset
+        updated_dataset = run_experiment_on_prompts(
             prompts_file=str(file),
             model_name=model_name,
             critique_model_name=critique_model_name,
             iteration_limit=num_iterations,
+            existing_dataset=existing_dataset,
+            force=force,
         )
 
-        # Save dataset
+        # Save dataset locally
         dataset_path_parquet = output_path / f"ouroboros_{domain}_dataset.parquet"
         dataset_path_json = output_path / f"ouroboros_{domain}_dataset.json"
 
-        dataset.to_parquet(str(dataset_path_parquet))
-        dataset.to_json(str(dataset_path_json))
+        updated_dataset.to_parquet(str(dataset_path_parquet))
+        updated_dataset.to_json(str(dataset_path_json))
 
         logging.info(
             f"Dataset successfully saved: {dataset_path_parquet}, {dataset_path_json}"
         )
+
+        # Push dataset to Hugging Face if requested
+        if push_to_hf and hf_dataset:
+            logging.info(f"Pushing updated dataset to Hugging Face: {hf_dataset}")
+            updated_dataset.push_to_hub(hf_dataset)
+            logging.info("Dataset successfully pushed to Hugging Face.")
 
 
 if __name__ == "__main__":
