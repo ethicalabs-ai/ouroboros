@@ -396,52 +396,52 @@ def main(
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # Load existing dataset if HF dataset name is provided
     existing_dataset = None
     if hf_dataset:
-        logging.info(f"Downloading existing dataset from Hugging Face: {hf_dataset}")
+        logging.info(f"Loading dataset from Hugging Face: {hf_dataset}")
         try:
-            existing_dataset = load_dataset(hf_dataset)
-            split_name = list(existing_dataset.keys())[0]
-            existing_dataset = existing_dataset[split_name]
-            logging.info(
-                f"Using dataset split: {split_name} with {len(existing_dataset)} records."
-            )
+            dataset_dict = load_dataset(hf_dataset)
+            split_name = list(dataset_dict.keys())[0]
+            existing_dataset = dataset_dict[split_name]
         except Exception as e:
-            logging.warning(f"Failed to load dataset from HF: {e}")
-            existing_dataset = None
+            logging.warning(f"Failed to load dataset: {e}")
+
+    changes_detected = False  # Track if we made any changes
 
     for file in prompt_path.glob("*.*"):
-        domain = file.stem  # e.g., "nlp-alpaca" for "nlp-alpaca.json"
-
+        domain = file.stem
         logging.info(f"Processing domain: {domain}")
 
-        # Run experiment on prompts and update dataset
         updated_dataset = run_experiment_on_prompts(
-            prompts_file=str(file),
-            model_name=model_name,
-            critique_model_name=critique_model_name,
-            iteration_limit=num_iterations,
-            existing_dataset=existing_dataset,
-            force=force,
+            str(file),
+            model_name,
+            critique_model_name,
+            num_iterations,
+            existing_dataset,
+            force,
         )
 
-        # Save dataset locally
-        dataset_path_parquet = output_path / f"ouroboros_{domain}_dataset.parquet"
-        dataset_path_json = output_path / f"ouroboros_{domain}_dataset.json"
+        if len(updated_dataset) == len(existing_dataset):  # No new data added
+            logging.info(f"No new prompts added for domain: {domain}. Skipping save.")
+            continue
 
-        updated_dataset.to_parquet(str(dataset_path_parquet))
-        updated_dataset.to_json(str(dataset_path_json))
+        changes_detected = True  # Changes detected
 
-        logging.info(
-            f"Dataset successfully saved: {dataset_path_parquet}, {dataset_path_json}"
-        )
+        dataset_path = output_path / f"ouroboros_{domain}_dataset.parquet"
+        if dataset_path.exists() and not click.confirm(
+            f"{dataset_path} exists. Overwrite?", default=True  # add click option -y
+        ):
+            continue
 
-        # Push dataset to Hugging Face if requested
-        if push_to_hf and hf_dataset:
-            logging.info(f"Pushing updated dataset to Hugging Face: {hf_dataset}")
-            updated_dataset.push_to_hub(hf_dataset)
-            logging.info("Dataset successfully pushed to Hugging Face.")
+        updated_dataset.to_parquet(str(dataset_path))
+
+    # Push to Hugging Face only if changes were made
+    if push_to_hf and hf_dataset and changes_detected:
+        logging.info(f"Pushing updated dataset to Hugging Face: {hf_dataset}")
+        updated_dataset.push_to_hub(repo_id=hf_dataset, private=False)
+        logging.info("Dataset successfully pushed to Hugging Face.")
+    elif push_to_hf:
+        logging.info("No new data added. Skipping Hugging Face push.")
 
 
 if __name__ == "__main__":
