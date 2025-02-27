@@ -3,3 +3,4 @@ Implement a function to sort a list of numbers. First, use the simplest possible
 Write a function that finds the factorial of a number using recursion. Then, refine the function to handle large numbers efficiently.
 Write a function that takes a list of strings and returns a dictionary mapping each unique word to its frequency. Then, refine your function by adding error handling and test cases.
 Write a Python script to read a CSV file and calculate the average value of a column. Then, refine your implementation to improve readability, modularity, and efficiency.
+Write a Python program that shows a ball bouncing inside a spinning hexagon. The ball should be affected by gravity and friction, and it must bounce off the rotating walls realistically.
