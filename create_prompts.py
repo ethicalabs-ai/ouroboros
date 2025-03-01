@@ -20,7 +20,7 @@ from datasets import load_dataset
 )
 @click.option(
     "--instruction_field",
-    default="instruction",
+    default=None,
     help="Field name for the instruction in the dataset (default: instruction)",
 )
 @click.option(
@@ -77,10 +77,12 @@ def main(
     # Open the output file for writing
     with open(prompts_file, "w", encoding="utf-8") as f:
         for row in ds:
-            instruction = row.get(instruction_field, "").strip()
+            instruction = (
+                row.get(instruction_field, "").strip() if instruction_field else None
+            )
             inp = row.get(input_field, "").strip()
 
-            prompt = f"{instruction}\n{inp}" if inp else instruction
+            prompt = f"{instruction}\n{inp}" if instruction else inp
             record = {
                 "dataset_name": dataset_name,  # Add dataset handle
                 "prompt": prompt,
