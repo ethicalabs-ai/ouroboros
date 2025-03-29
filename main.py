@@ -2,7 +2,7 @@ import json
 import logging
 import re
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import click
 import numpy as np
@@ -186,7 +186,7 @@ class RecursiveAIExperiment:
                 "final_response": "",
             }
 
-        # Step 2: Rank responses based on critique scores
+        # Step 2: Rank responses based on semantic similarity
         ranked = self.rank_responses(candidates, query)
 
         # Step 3: Select the best response (highest-ranked) for recursive improvement
@@ -238,27 +238,22 @@ def load_prompt_records(prompts_file: str):
     """
     Load prompt records from a file.
 
-    If prompts_file ends with '.json', it is assumed to be a JSONL file:
+    If prompts_file ends with '.jsonl', it is assumed to be a JSONL file:
       each line is a JSON object containing at least a "prompt" key.
-      e.g. {"prompt": "...", "some_other_field": "..."}
-
     Otherwise, it is treated as a plain text file:
       each non-empty line is treated as a prompt (string).
     """
     if prompts_file.endswith(".jsonl"):
-        # JSONL file
         with open(prompts_file, "r", encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
                 if not line:
                     continue
                 record = json.loads(line)
-                # Ensure there's at least a 'prompt' key
                 if "prompt" not in record:
                     raise ValueError("JSON lines must contain a 'prompt' field.")
                 yield record
     else:
-        # Plain text: each line is a prompt
         with open(prompts_file, "r", encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
@@ -268,17 +263,26 @@ def load_prompt_records(prompts_file: str):
 
 
 def run_experiment_on_prompts(
-    prompts_file: str,
     domain: str,
     model_name: str,
     critique_model_name: str,
     iteration_limit: int,
-    existing_dataset: Dataset = None,
+    existing_dataset: Optional[Dataset] = None,
     force: bool = False,
+    source_dataset_file: Optional[str] = None,
+    source_dataset_hf: Optional[str] = None,
+    prompt_field: str = "prompt",
+    response_field: str = "response",
+    dataset_name: Optional[str] = None,
 ) -> Dataset:
     """
-    Runs the Ouroboros pipeline on prompts from `prompts_file`,
-    merges with existing_dataset if provided, and prevents duplicate records.
+    Runs the Ouroboros pipeline on prompts.
+
+    If source_dataset_file or source_dataset_hf is provided, each record is assumed to contain a prompt
+    and an existing response (using prompt_field and response_field). The experiment
+    then refines the existing response.
+    Otherwise, it loads prompts from prompts_file and generates responses from scratch.
+    The final record includes the domain, source dataset info, and a dataset_name.
     """
     ai_experiment = RecursiveAIExperiment(
         model_name, critique_model_name, iteration_limit
@@ -289,49 +293,53 @@ def run_experiment_on_prompts(
     if existing_dataset is not None and "input" in existing_dataset.column_names:
         existing_records = {row["input"]: row for row in existing_dataset}
 
-    for i, record in enumerate(load_prompt_records(prompts_file), start=1):
-        prompt = record["prompt"]
+    records = []
+    source_name = None
+    if source_dataset_file:
+        records = list(load_prompt_records(source_dataset_file))
+        source_name = source_dataset_file
+    elif source_dataset_hf:
+        ds = load_dataset(source_dataset_hf)
+        split = list(ds.keys())[0]
+        records = ds[split]
+        source_name = source_dataset_hf
 
-        # Handle duplicates:
-        if prompt in existing_records:
-            if not force:
-                logging.info(f"Skipping existing prompt: {prompt}")
-                continue
-            else:
-                logging.info(f"Replacing existing prompt due to --force: {prompt}")
+    for i, record in enumerate(records, start=1):
+        prompt = record.get(prompt_field)
+        original_response = record.get(response_field)
+        if prompt is None or original_response is None:
+            logging.warning(f"Skipping record #{i} due to missing fields.")
+            continue
 
-        # Run experiment
-        logging.info(f"Running experiment for prompt #{i}: {prompt}")
-        result = ai_experiment.run_experiment(prompt)
-        reasoning_steps = extract_reasoning(result["final_response"])
+        if prompt in existing_records and not force:
+            logging.info(f"Skipping existing prompt: {prompt}")
+            continue
 
+        logging.info(f"Refining record #{i} for prompt: {prompt}")
+        refined_response = ai_experiment.recursive_improvement(
+            original_response, prompt
+        )
+        reasoning_steps = extract_reasoning(refined_response)
         new_entry = {
             "input": prompt,
+            "original_response": original_response,
+            "completion": clean_response(refined_response),
             "reasoning": reasoning_steps if reasoning_steps else None,
-            "completion": clean_response(result["final_response"]),
-            "refinements": result["ranked_responses"],
             "domain": domain,
+            "source_dataset": source_name,
+            "dataset_name": dataset_name,
         }
-        # Keep other keys from the record if present
         for k, v in record.items():
-            if k != "prompt":
+            if k not in {prompt_field, response_field}:
                 new_entry[k] = v
 
-        # Update the existing record OR add new one
         existing_records[prompt] = new_entry
 
-    # Create updated dataset without duplicates
     updated_dataset = Dataset.from_list(list(existing_records.values()))
     return updated_dataset
 
 
 @click.command()
-@click.option(
-    "--prompt_dir",
-    type=click.Path(exists=True, file_okay=False),
-    required=True,
-    help="Directory containing prompt files, categorized by domain.",
-)
 @click.option(
     "--output_dir",
     type=click.Path(file_okay=False),
@@ -377,8 +385,41 @@ def run_experiment_on_prompts(
     is_flag=True,
     help="Automatically confirm overwriting files without prompting.",
 )
+@click.option(
+    "--source_dataset",
+    type=click.Path(exists=True),
+    help="Path to the source dataset file to use for refinement (JSONL or text).",
+)
+@click.option(
+    "--source_dataset_hf",
+    type=str,
+    help="Hugging Face dataset path to use for refinement, e.g., user/dataset_name",
+)
+@click.option(
+    "--prompt_field",
+    type=str,
+    default="prompt",
+    help="Field name in the source dataset that contains the prompt.",
+)
+@click.option(
+    "--response_field",
+    type=str,
+    default="response",
+    help="Field name in the source dataset that contains the response.",
+)
+@click.option(
+    "--dataset_name",
+    type=str,
+    required=True,
+    help="Name to assign to the final dataset.",
+)
+@click.option(
+    "--domain",
+    type=str,
+    default=None,
+    help="Set the domain for the dataset.",
+)
 def main(
-    prompt_dir,
     output_dir,
     hf_dataset,
     model_name,
@@ -387,64 +428,66 @@ def main(
     force,
     push_to_hf,
     yes,
+    source_dataset,
+    source_dataset_hf,
+    prompt_field,
+    response_field,
+    dataset_name,
+    domain,
 ):
     logging.basicConfig(level=logging.INFO)
-    prompt_path = Path(prompt_dir)
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # 1) Load existing dataset from HF (if specified)
     existing_dataset = None
     if hf_dataset:
         logging.info(f"Loading dataset from Hugging Face: {hf_dataset}")
         try:
             ds_dict = load_dataset(hf_dataset)
-            first_split = list(ds_dict.keys())[0]  # e.g. "train"
+            first_split = list(ds_dict.keys())[0]
             existing_dataset = ds_dict[first_split]
             logging.info(f"Loaded '{hf_dataset}' with {len(existing_dataset)} rows.")
         except Exception as e:
             logging.warning(f"Failed to load dataset: {e}")
             existing_dataset = None
 
-    # 2) Iterate prompt files to accumulate updates in a single dataset
     merged_dataset = existing_dataset
     changes_detected = False
 
-    for file in prompt_path.glob("*.*"):
-        domain = file.stem
-        logging.info(f"Processing domain: {domain} from file: {file}")
+    if source_dataset or source_dataset_hf:
+        current_domain = domain if domain else "default"
+        logging.info(
+            f"Processing source dataset: {source_dataset or source_dataset_hf} with domain: {current_domain}"
+        )
         updated_dataset = run_experiment_on_prompts(
-            prompts_file=str(file),
-            domain=domain,
+            domain=current_domain,
             model_name=model_name,
             critique_model_name=critique_model_name,
             iteration_limit=num_iterations,
             existing_dataset=merged_dataset,
             force=force,
+            source_dataset_file=source_dataset,
+            source_dataset_hf=source_dataset_hf,
+            prompt_field=prompt_field,
+            response_field=response_field,
+            dataset_name=dataset_name,
         )
-        # If updated dataset is bigger => new data was added
-        if (
-            force
-            or merged_dataset is None
-            or len(updated_dataset) > len(merged_dataset)
-        ):
-            changes_detected = True
-            merged_dataset = updated_dataset  # Keep the newly updated dataset
-        else:
-            logging.info(f"No new prompts were added for domain: {domain}.")
+        changes_detected = True
+        merged_dataset = updated_dataset
 
-    # 3) If changes were detected, save locally
     if changes_detected and merged_dataset is not None:
-        # Just pick a single name or store separate domain files if needed
         dataset_path_parquet = output_path / "ouroboros_dataset.parquet"
         dataset_path_json = output_path / "ouroboros_dataset.json"
 
-        if dataset_path_parquet.exists():
-            if not yes and click.confirm(
+        if (
+            dataset_path_parquet.exists()
+            and not yes
+            and not click.confirm(
                 f"{dataset_path_parquet} exists. Overwrite?", default=True
-            ):
-                logging.info("Skipping save due to user cancel.")
-                return
+            )
+        ):
+            logging.info("User cancelled overwrite. Exiting.")
+            return
 
         merged_dataset.to_parquet(str(dataset_path_parquet))
         merged_dataset.to_json(str(dataset_path_json))
@@ -454,7 +497,6 @@ def main(
     else:
         logging.info("No changes detected. Skipping local save.")
 
-    # 4) Push once to Hugging Face if requested
     if push_to_hf and hf_dataset and changes_detected and merged_dataset is not None:
         token = HfFolder.get_token()
         if not token:
